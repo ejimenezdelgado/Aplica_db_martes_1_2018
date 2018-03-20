@@ -192,6 +192,8 @@ INSERT INTO titulos_autores
   VALUES (6, 3)
 GO
 
+CREATE PROCEDURE prod_Autores_Libros as
+
 --Ahora creamos el cursor y ejecumatos
 SET NOCOUNT ON
 DECLARE @codigo varchar(11),
@@ -245,3 +247,5 @@ BEGIN
 END
 CLOSE authors_cursor
 DEALLOCATE authors_cursor
+
+EXEC prod_Autores_Libros
