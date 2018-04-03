@@ -1,10 +1,10 @@
 CREATE TABLE familia (
-    id int NOT NULL PRIMARY KEY,
+    id int NOT NULL PRIMARY KEY IDENTITY,
     descripcion varchar(50) NOT NULL
 );
 
 CREATE TABLE producto (
-    id int NOT NULL PRIMARY KEY,
+    id int NOT NULL PRIMARY KEY IDENTITY,
     nombre varchar(40) NOT NULL,
     marca varchar(40) NOT NULL,
     precio DOUBLE PRECISION NOT NULL,
@@ -17,19 +17,19 @@ CREATE TABLE producto (
 );
 
 CREATE TABLE localizacion (
-    id int NOT NULL PRIMARY KEY,
+    id int NOT NULL PRIMARY KEY IDENTITY,
     descripcion varchar(150) NOT NULL
 );
 
 CREATE TABLE seccion (
-    id int NOT NULL PRIMARY KEY,
+    id int NOT NULL PRIMARY KEY IDENTITY,
     uso varchar(150) NOT NULL,
     id_localizacion INTEGER NOT NULL,
     FOREIGN KEY (id_localizacion) REFERENCES localizacion (id)
 );
 
 CREATE TABLE bodega (
-    id int NOT NULL PRIMARY KEY,
+    id int NOT NULL PRIMARY KEY IDENTITY,
     propiedad_empresa bit NOT NULL,
     renta_mensual_colones DOUBLE PRECISION NOT NULL,
     renta_mensual_dolares DOUBLE PRECISION NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE bodega (
 );
 
 CREATE TABLE bodega_producto (
-    id int NOT NULL PRIMARY KEY,
+    id int NOT NULL PRIMARY KEY IDENTITY,
     id_producto INTEGER NOT NULL,
     id_bodega INTEGER NOT NULL,
     FOREIGN KEY (id_producto) REFERENCES producto (id),
@@ -46,7 +46,7 @@ CREATE TABLE bodega_producto (
 );
 
 CREATE TABLE proveedor (
-    id int NOT NULL PRIMARY KEY,
+    id int NOT NULL PRIMARY KEY IDENTITY,
     nombre varchar(100) NOT NULL,
     unidades INTEGER NOT NULL,
     id_producto INTEGER NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE proveedor (
 );
 
 CREATE TABLE compra_producto (
-    id int NOT NULL PRIMARY KEY,
+    id int NOT NULL PRIMARY KEY IDENTITY,
     unidades INTEGER NOT NULL,
     id_producto INTEGER NOT NULL,
     id_proveedor INTEGER NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE compra_producto (
 );
 
 CREATE TABLE factura (
-    id int NOT NULL PRIMARY KEY,
+    id int NOT NULL PRIMARY KEY IDENTITY,
     id_compra_producto INTEGER NOT NULL,
     fecha DATE NOT NULL,
     impuesto DOUBLE PRECISION NOT NULL,
@@ -72,7 +72,7 @@ CREATE TABLE factura (
 );
 
 CREATE TABLE auditoria (
-    id int NOT NULL PRIMARY KEY,
+    id int NOT NULL PRIMARY KEY IDENTITY,
     accion varchar(100) NOT NULL,
     fecha DATE NOT NULL
 );
