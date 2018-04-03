@@ -327,4 +327,4 @@ INSERT INTO bodega_producto (id_producto, id_bodega)
     VALUES (9, 9);
 
 INSERT INTO bodega_producto (id_producto, id_bodega)
-    VALUES (10, 11);
+    VALUES (10, 10);
