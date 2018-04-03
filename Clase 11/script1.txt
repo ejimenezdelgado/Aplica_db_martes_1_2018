@@ -1,0 +1,320 @@
+CREATE TABLE familias (
+    id serial NOT NULL PRIMARY KEY,
+    descripcion varchar(50) NOT NULL
+);
+
+CREATE TABLE productos (
+    id serial NOT NULL PRIMARY KEY,
+    nombre varchar(40) NOT NULL,
+    marca varchar(40) NOT NULL,
+    precio DOUBLE PRECISION NOT NULL,
+    cantidad INTEGER NOT NULL,
+    unidades INTEGER NOT NULL,
+    cantidad_minimaexistencia INTEGER NOT NULL,
+    cantidad_deseadaexistencia INTEGER NOT NULL,
+    id_familia INTEGER NOT NULL,
+    FOREIGN KEY (id_familia) REFERENCES familias (id)
+);
+
+CREATE TABLE localizaciones (
+    id serial NOT NULL PRIMARY KEY,
+    descripcion varchar(150) NOT NULL
+);
+
+CREATE TABLE secciones (
+    id serial NOT NULL PRIMARY KEY,
+    uso varchar(150) NOT NULL,
+    id_localizacion INTEGER NOT NULL,
+    FOREIGN KEY (id_localizacion) REFERENCES localizaciones (id)
+);
+
+CREATE TABLE bodegas (
+    id serial NOT NULL PRIMARY KEY,
+    propiedad_empresa BOOLEAN NOT NULL,
+    renta_mensualcolones DOUBLE PRECISION NOT NULL,
+    renta_mensualdolares DOUBLE PRECISION NOT NULL,
+    id_seccion INTEGER NOT NULL,
+    FOREIGN KEY (id_seccion) REFERENCES secciones (id)
+);
+
+CREATE TABLE bodega_producto (
+    id serial NOT NULL PRIMARY KEY,
+    id_producto INTEGER NOT NULL,
+    id_bodega INTEGER NOT NULL,
+    FOREIGN KEY (id_producto) REFERENCES productos (id),
+    FOREIGN KEY (id_bodega) REFERENCES bodegas (id)
+);
+
+CREATE TABLE proveedores (
+    id serial NOT NULL PRIMARY KEY,
+    nombre varchar(100) NOT NULL,
+    unidades INTEGER NOT NULL,
+    id_producto INTEGER NOT NULL,
+    FOREIGN KEY (id_producto) REFERENCES productos (id)
+);
+
+CREATE TABLE compra_productos (
+    id serial NOT NULL PRIMARY KEY,
+    unidades INTEGER NOT NULL,
+    id_producto INTEGER NOT NULL,
+    id_proveedor INTEGER NOT NULL,
+    FOREIGN KEY (id_producto) REFERENCES productos (id),
+    FOREIGN KEY (id_proveedor) REFERENCES proveedores (id)
+);
+
+CREATE TABLE facturas (
+    id serial NOT NULL PRIMARY KEY,
+    id_compraproducto INTEGER NOT NULL,
+    fecha DATE NOT NULL,
+    impuesto DOUBLE PRECISION NOT NULL,
+    precio DOUBLE PRECISION NOT NULL,
+    FOREIGN KEY (id_compraproducto) REFERENCES compra_productos (id)
+);
+
+CREATE TABLE auditoria (
+    id serial NOT NULL PRIMARY KEY,
+    accion varchar(100) NOT NULL,
+    fecha DATE NOT NULL
+);
+
+/ / / / / / / / / / / / / / / / / / / / / / / / / / / Inserts / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / FAMILIAS / / / / / / / / / / / / / / / / / / / / / / / INSERT INTO public.familias (descripcion)
+    VALUES ('Alimentos');
+
+INSERT INTO public.familias (descripcion)
+    VALUES ('Abarrotes');
+
+INSERT INTO public.familias (descripcion)
+    VALUES ('Electrodomesticos');
+
+INSERT INTO public.familias (descripcion)
+    VALUES ('Alimentos');
+
+INSERT INTO public.familias (descripcion)
+    VALUES ('Ropa');
+
+INSERT INTO public.familias (descripcion)
+    VALUES ('Limpieza')
+INSERT INTO public.familias (descripcion)
+    VALUES ('Animales');
+
+INSERT INTO public.familias (descripcion)
+    VALUES ('Joyeria');
+
+INSERT INTO public.familias (descripcion)
+    VALUES ('Tecnologia');
+
+INSERT INTO public.familias (descripcion)
+    VALUES ('Verduras');
+
+/ / / / / / / / / / / / / / / / PRODUCTOS / / / / / / / / / / / / / / / / / / / INSERT INTO public.productos (nombre, marca, precio, cantidad, unidades, cantidad_minimaexistencia, cantidad_deseadaexistencia, id_familia)
+    VALUES ('agua', 'alpina', 500, 15, 20, 5, 20, 1);
+
+INSERT INTO public.productos (nombre, marca, precio, cantidad, unidades, cantidad_minimaexistencia, cantidad_deseadaexistencia, id_familia)
+    VALUES ('Frijoles', 'Tio Pelon', 800, 8, 20, 5, 20, 1);
+
+INSERT INTO public.productos (nombre, marca, precio, cantidad, unidades, cantidad_minimaexistencia, cantidad_deseadaexistencia, id_familia)
+    VALUES ('Sarten', 'RinaWare', 10000, 2, 10, 2, 10, 2);
+
+INSERT INTO public.productos (nombre, marca, precio, cantidad, unidades, cantidad_minimaexistencia, cantidad_deseadaexistencia, id_familia)
+    VALUES ('Camisa', 'Holister', 5000, 15, 20, 5, 20, 5);
+
+INSERT INTO public.productos (nombre, marca, precio, cantidad, unidades, cantidad_minimaexistencia, cantidad_deseadaexistencia, id_familia)
+    VALUES ('Jabon', 'Rinso', 1000, 15, 20, 5, 20, 6);
+
+INSERT INTO public.productos (nombre, marca, precio, cantidad, unidades, cantidad_minimaexistencia, cantidad_deseadaexistencia, id_familia)
+    VALUES ('Celular', 'Blue', 50000, 15, 20, 5, 20, 9);
+
+INSERT INTO public.productos (nombre, marca, precio, cantidad, unidades, cantidad_minimaexistencia, cantidad_deseadaexistencia, id_familia)
+    VALUES ('Arroz', 'Tio Pelon', 900, 15, 20, 5, 20, 1);
+
+INSERT INTO public.productos (nombre, marca, precio, cantidad, unidades, cantidad_minimaexistencia, cantidad_deseadaexistencia, id_familia)
+    VALUES ('Tomate', 'Juanito Verdurero', 150, 15, 20, 5, 20, 10);
+
+INSERT INTO public.productos (nombre, marca, precio, cantidad, unidades, cantidad_minimaexistencia, cantidad_deseadaexistencia, id_familia)
+    VALUES ('Aretes', 'Topacio', 80000, 15, 20, 5, 20, 8);
+
+INSERT INTO public.productos (nombre, marca, precio, cantidad, unidades, cantidad_minimaexistencia, cantidad_deseadaexistencia, id_familia)
+    VALUES ('Microhondas', 'LG', 30000, 15, 20, 5, 20, 3);
+
+/ / / / / / / / / / / / / / / / LOCALIZACIONES INSERT INTO public.localizaciones (descripcion)
+    VALUES ('San Carlos');
+
+INSERT INTO public.localizaciones (descripcion)
+    VALUES ('Granos');
+
+INSERT INTO public.localizaciones (descripcion)
+    VALUES ('Celulares');
+
+INSERT INTO public.localizaciones (descripcion)
+    VALUES ('Sartenes');
+
+INSERT INTO public.localizaciones (descripcion)
+    VALUES ('Aretes');
+
+INSERT INTO public.localizaciones (descripcion)
+    VALUES ('Camisas');
+
+INSERT INTO public.localizaciones (descripcion)
+    VALUES ('zapatos');
+
+INSERT INTO public.localizaciones (descripcion)
+    VALUES ('Animales');
+
+INSERT INTO public.localizaciones (descripcion)
+    VALUES ('Detergentes');
+
+INSERT INTO public.localizaciones (descripcion)
+    VALUES ('Liquidos');
+
+INSERT INTO public.localizaciones (descripcion)
+    VALUES ('Fontaneria');
+
+/ / / / / / / / / / / / / / / / / / / / / / / / / Secciones / / / / / / / / / / / / / / / / / / / / / / / / / / / INSERT INTO public.secciones (uso, id_localizacion)
+    VALUES ('Granos', 1);
+
+INSERT INTO public.secciones (uso, id_localizacion)
+    VALUES ('Tecnologias', 2);
+
+INSERT INTO public.secciones (uso, id_localizacion)
+    VALUES ('Ropa', 5);
+
+INSERT INTO public.secciones (uso, id_localizacion)
+    VALUES ('Hogar', 3);
+
+INSERT INTO public.secciones (uso, id_localizacion)
+    VALUES ('Joyeria', 4);
+
+INSERT INTO public.secciones (uso, id_localizacion)
+    VALUES ('Tennis', 6);
+
+INSERT INTO public.secciones (uso, id_localizacion)
+    VALUES ('Refrescos', 9);
+
+INSERT INTO public.secciones (uso, id_localizacion)
+    VALUES ('Jabones', 8);
+
+INSERT INTO public.secciones (uso, id_localizacion)
+    VALUES ('Hogar', 10);
+
+INSERT INTO public.secciones (uso, id_localizacion)
+    VALUES ('Mascotas', 7);
+
+/ / / / / / / / / / / / / / / / / / / / / / / / / / / / / PROVEDOORES / / / / / / / / / / / / / / / / / / / / / INSERT INTO public.proveedores (nombre, unidades, id_producto)
+    VALUES ('Oscar', 20, 1);
+
+INSERT INTO public.proveedores (nombre, unidades, id_producto)
+    VALUES ('Josue', 80, 2);
+
+INSERT INTO public.proveedores (nombre, unidades, id_producto)
+    VALUES ('Juancho', 100, 5);
+
+INSERT INTO public.proveedores (nombre, unidades, id_producto)
+    VALUES ('Benito', 40, 3);
+
+INSERT INTO public.proveedores (nombre, unidades, id_producto)
+    VALUES ('Vicente', 30, 8);
+
+INSERT INTO public.proveedores (nombre, unidades, id_producto)
+    VALUES ('Beto', 70, 6);
+
+INSERT INTO public.proveedores (nombre, unidades, id_producto)
+    VALUES ('Marcelino', 50, 10);
+
+INSERT INTO public.proveedores (nombre, unidades, id_producto)
+    VALUES ('Carlos', 70, 4);
+
+INSERT INTO public.proveedores (nombre, unidades, id_producto)
+    VALUES ('Fulton', 10, 7);
+
+INSERT INTO public.proveedores (nombre, unidades, id_producto)
+    VALUES ('Pedro', 30, 9);
+
+/ / / / / / / / / / / / / / / / / / / COMPRA_PRODUCTOS / / / / / / / / / / / / / / / / / / / / / / / / / / / INSERT INTO public.compra_productos (unidades, id_producto, id_proveedor)
+    VALUES (10, 1, 1);
+
+INSERT INTO public.compra_productos (unidades, id_producto, id_proveedor)
+    VALUES (60, 2, 2);
+
+INSERT INTO public.compra_productos (unidades, id_producto, id_proveedor)
+    VALUES (20, 5, 3);
+
+INSERT INTO public.compra_productos (unidades, id_producto, id_proveedor)
+    VALUES (10, 3, 4);
+
+INSERT INTO public.compra_productos (unidades, id_producto, id_proveedor)
+    VALUES (5, 8, 5);
+
+INSERT INTO public.compra_productos (unidades, id_producto, id_proveedor)
+    VALUES (3, 6, 6);
+
+INSERT INTO public.compra_productos (unidades, id_producto, id_proveedor)
+    VALUES (5, 10, 7);
+
+INSERT INTO public.compra_productos (unidades, id_producto, id_proveedor)
+    VALUES (4, 4, 8);
+
+INSERT INTO public.compra_productos (unidades, id_producto, id_proveedor)
+    VALUES (8, 7, 9);
+
+INSERT INTO public.compra_productos (unidades, id_producto, id_proveedor)
+    VALUES (8, 9, 10);
+
+/ / / / / / / / / / / / / / / / / / / Bodegas / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / INSERT INTO public.bodegas (propiedad_empresa, renta_mensualcolones, renta_mensualdolares, id_seccion)
+    VALUES (TRUE, 0, 0, 1);
+
+INSERT INTO public.bodegas (propiedad_empresa, renta_mensualcolones, renta_mensualdolares, id_seccion)
+    VALUES (TRUE, 0, 0, 2);
+
+INSERT INTO public.bodegas (propiedad_empresa, renta_mensualcolones, renta_mensualdolares, id_seccion)
+    VALUES (TRUE, 0, 0, 3);
+
+INSERT INTO public.bodegas (propiedad_empresa, renta_mensualcolones, renta_mensualdolares, id_seccion)
+    VALUES (TRUE, 0, 0, 4);
+
+INSERT INTO public.bodegas (propiedad_empresa, renta_mensualcolones, renta_mensualdolares, id_seccion)
+    VALUES (TRUE, 0, 0, 5);
+
+INSERT INTO public.bodegas (propiedad_empresa, renta_mensualcolones, renta_mensualdolares, id_seccion)
+    VALUES (TRUE, 0, 0, 6);
+
+INSERT INTO public.bodegas (propiedad_empresa, renta_mensualcolones, renta_mensualdolares, id_seccion)
+    VALUES (TRUE, 0, 0, 7);
+
+INSERT INTO public.bodegas (propiedad_empresa, renta_mensualcolones, renta_mensualdolares, id_seccion)
+    VALUES (TRUE, 60000, 120, 8);
+
+INSERT INTO public.bodegas (propiedad_empresa, renta_mensualcolones, renta_mensualdolares, id_seccion)
+    VALUES (FALSE, 100000, 200, 9);
+
+INSERT INTO public.bodegas (propiedad_empresa, renta_mensualcolones, renta_mensualdolares, id_seccion)
+    VALUES (FALSE, 20000, 400, 10);
+
+/ / / / / / / / / / / / / / / / / / / / / Bodega_Producto INSERT INTO public.bodega_producto (id_producto, id_bodega)
+    VALUES (1, 2);
+
+INSERT INTO public.bodega_producto (id_producto, id_bodega)
+    VALUES (2, 1);
+
+INSERT INTO public.bodega_producto (id_producto, id_bodega)
+    VALUES (3, 3);
+
+INSERT INTO public.bodega_producto (id_producto, id_bodega)
+    VALUES (4, 4);
+
+INSERT INTO public.bodega_producto (id_producto, id_bodega)
+    VALUES (5, 5);
+
+INSERT INTO public.bodega_producto (id_producto, id_bodega)
+    VALUES (6, 6);
+
+INSERT INTO public.bodega_producto (id_producto, id_bodega)
+    VALUES (7, 7);
+
+INSERT INTO public.bodega_producto (id_producto, id_bodega)
+    VALUES (8, 10);
+
+INSERT INTO public.bodega_producto (id_producto, id_bodega)
+    VALUES (9, 9);
+
+INSERT INTO public.bodega_producto (id_producto, id_bodega)
+    VALUES (10, 11);
